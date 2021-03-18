@@ -6,10 +6,10 @@ stages:
 steps:
   main_clone:
     title: Cloning main repository...
-    stage: prepare
     type: git-clone
-    repo: 'codefresh-contrib/react-sample-app'
-    revision: master
+    stage: prepare
+    repo: '${{CF_REPO_OWNER}}/${{CF_REPO_NAME}}'
+    revision: '${{CF_REVISION}}'
     git: github
   MyUnitTests:
     title: Unit test
@@ -24,7 +24,7 @@ steps:
     title: Building Docker Image
     type: build
     stage: build
-    image_name: react-sample-app
+    image_name: ariesmcrae/react-sample-app
     working_directory: ./
     tag: 'with-nginx'
     dockerfile: Dockerfile
