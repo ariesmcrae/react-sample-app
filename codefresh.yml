@@ -4,7 +4,7 @@ stages:
   - git-clone
   - unit-test
   - build
-  - MyPushStep
+  - upload
 steps:
   main_clone:
     title: Cloning main repository...
