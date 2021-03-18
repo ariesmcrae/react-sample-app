@@ -1,8 +1,10 @@
 version: '1.0'
+
 stages:
   - git-clone
   - unit-test
   - build
+  -
 steps:
   main_clone:
     title: Cloning main repository...
@@ -11,6 +13,7 @@ steps:
     repo: '${{CF_REPO_OWNER}}/${{CF_REPO_NAME}}'
     revision: '${{CF_REVISION}}'
     git: github
+
   MyUnitTests:
     title: Unit test
     stage: unit-test
@@ -20,11 +23,22 @@ steps:
       - yarn test
     environment:
       - CI=true
+
   MyAppDockerImage:
     title: Building Docker Image
     type: build
     stage: build
-    image_name: ariesmcrae/react-sample-app
+    image_name: react-sample-app
     working_directory: ./
-    tag: 'with-nginx'
+    tag: '${{CF_BRANCH}}'
     dockerfile: Dockerfile
+    disable_push: true
+
+  MyPushStep:
+    title: Pushing to Docker Registry
+    type: push
+    stage: upload
+    tag: '${{CF_BRANCH}}'
+    candidate: '${{MyAppDockerImage}}'
+    image_name: ariesmcrae/python-flask-sample-app
+    registry: github-container-registry
