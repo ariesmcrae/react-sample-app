@@ -40,5 +40,5 @@ steps:
     stage: upload
     tag: '${{CF_BRANCH}}'
     candidate: '${{MyAppDockerImage}}'
-    image_name: ariesmcrae/python-flask-sample-app
+    image_name: ariesmcrae/react-sample-app
     registry: github-container-registry
