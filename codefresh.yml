@@ -1,19 +1,19 @@
 version: '1.0'
 stages:
-  - prepare
-  - test
+  - git-clone
+  - unit-test
   - build
 steps:
   main_clone:
     title: Cloning main repository...
     type: git-clone
-    stage: prepare
+    stage: git-clone
     repo: '${{CF_REPO_OWNER}}/${{CF_REPO_NAME}}'
     revision: '${{CF_REVISION}}'
     git: github
   MyUnitTests:
     title: Unit test
-    stage: test
+    stage: unit-test
     image: node:8.16
     commands:
       - yarn install
